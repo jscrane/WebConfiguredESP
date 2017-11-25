@@ -19,7 +19,7 @@ It also supports OTA upgrade by web-browser.
 ## Initialisation
 Initially no WiFi is configured so it will go into AP mode:
 - connect to SSID "MyESP"
-- point a web-browser at 192.168.4.1
+- point a web-browser at http://192.168.4.1
 - configure your SSID and password
 - update
 
