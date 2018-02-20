@@ -2,7 +2,8 @@
 Starter for sketches configurable by a JSON file in SPIFFS.
 
 This starter takes care of the fiddly details of making your sketch
-configurable via a web-browser.
+configurable via a web-browser by creating its own Access Point and
+listening on [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS).
 
 It also supports OTA upgrade by web-browser.
 
@@ -19,7 +20,7 @@ It also supports OTA upgrade by web-browser.
 ## Initialisation
 Initially no WiFi is configured so it will go into AP mode:
 - connect to SSID "MyESP"
-- point a web-browser at http://192.168.4.1
+- point a web-browser at http://192.168.4.1 or http://myesp.local
 - configure your SSID and password
 - update
 
