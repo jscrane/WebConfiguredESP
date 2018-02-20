@@ -75,23 +75,22 @@ void setup() {
 	httpUpdater.setup(&server);
 	server.begin();
 
+  if (mdns.begin(cfg.hostname, WiFi.localIP())) {
+    Serial.println(F("mDNS started"));
+    mdns.addService("http", "tcp", 80);
+  } else
+    Serial.println(F("Error starting MDNS"));
+
 	if (!connected) {
 		WiFi.softAP(cfg.hostname);
 		Serial.print(F("Connect to SSID: "));
 		Serial.print(cfg.hostname);
 		Serial.println(F(" and URL http://192.168.4.1 to configure WIFI"));
- 
 	} else {
 		Serial.println();
 		Serial.print(F("Connected to "));
 		Serial.println(cfg.ssid);
 		Serial.println(WiFi.localIP());
-
-		if (mdns.begin(cfg.hostname, WiFi.localIP())) {
-			Serial.println(F("mDNS started"));
-			mdns.addService("http", "tcp", 80);
-		} else
-			Serial.println(F("Error starting MDNS"));
 	}
 
 	// FIXME: startup
@@ -99,11 +98,11 @@ void setup() {
 
 void loop() {
 
+  mdns.update();
 	server.handleClient();
+
 	if (!connected)
 		return;
-
-	mdns.update();
 
 	// FIXME: main loop
 }
