@@ -53,7 +53,7 @@ void setup() {
 		WiFi.begin(cfg.ssid, cfg.password);
 		for (int i = 0; i < 60 && WiFi.status() != WL_CONNECTED; i++) {
 			delay(500);
-			Serial.print(F("."));
+			Serial.print('.');
 		}
 		connected = WiFi.status() == WL_CONNECTED;
 	}
@@ -75,11 +75,11 @@ void setup() {
 	httpUpdater.setup(&server);
 	server.begin();
 
-  if (mdns.begin(cfg.hostname, WiFi.localIP())) {
-    Serial.println(F("mDNS started"));
-    mdns.addService("http", "tcp", 80);
-  } else
-    Serial.println(F("Error starting MDNS"));
+	if (mdns.begin(cfg.hostname, WiFi.localIP())) {
+		Serial.println(F("mDNS started"));
+		mdns.addService("http", "tcp", 80);
+	} else
+		Serial.println(F("Error starting MDNS"));
 
 	if (!connected) {
 		WiFi.softAP(cfg.hostname);
@@ -98,7 +98,7 @@ void setup() {
 
 void loop() {
 
-  mdns.update();
+	mdns.update();
 	server.handleClient();
 
 	if (!connected)
