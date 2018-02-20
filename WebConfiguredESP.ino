@@ -22,9 +22,9 @@ public:
 } cfg;
 
 void config::configure(JsonObject &o) {
-	strncpy_null(ssid, o["ssid"], sizeof(ssid));
-	strncpy_null(password, o["password"], sizeof(password));
-	strncpy_null(hostname, o["hostname"], sizeof(hostname));
+	strncpy(ssid, o[F("ssid")] | "", sizeof(ssid));
+	strncpy(password, o[F("password")] | "", sizeof(password));
+	strncpy(hostname, o[F("hostname")] | "", sizeof(hostname));
 
 	// FIXME: read your configuration parameters here
 }
