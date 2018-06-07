@@ -22,9 +22,9 @@ public:
 } cfg;
 
 void config::configure(JsonObject &o) {
-	strncpy(ssid, o[F("ssid")] | "", sizeof(ssid));
-	strncpy(password, o[F("password")] | "", sizeof(password));
-	strncpy(hostname, o[F("hostname")] | "", sizeof(hostname));
+	strlcpy(ssid, o[F("ssid")] | "", sizeof(ssid));
+	strlcpy(password, o[F("password")] | "", sizeof(password));
+	strlcpy(hostname, o[F("hostname")] | "", sizeof(hostname));
 
 	// FIXME: read your configuration parameters here
 }
@@ -50,6 +50,7 @@ void setup() {
 	WiFi.mode(WIFI_STA);
 	WiFi.hostname(cfg.hostname);
 	if (*cfg.ssid) {
+		WiFi.setAutoReconnect(true);
 		WiFi.begin(cfg.ssid, cfg.password);
 		for (int i = 0; i < 60 && WiFi.status() != WL_CONNECTED; i++) {
 			delay(500);
