@@ -2,8 +2,9 @@
 Starter for sketches configurable by a JSON file in SPIFFS.
 
 This starter takes care of the fiddly details of making your sketch
-configurable via a web-browser by creating its own Access Point and
-listening on [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS).
+configurable via a web-browser by creating its own Access Point,
+setting up a [Captive Portal](https://en.wikipedia.org/wiki/Captive_portal)
+and listening on [mDNS](https://en.wikipedia.org/wiki/Multicast_DNS).
 
 It also supports OTA upgrade by web-browser.
 
