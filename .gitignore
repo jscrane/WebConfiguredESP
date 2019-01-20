@@ -1,0 +1,7 @@
+.lib/
+*.cpp.d
+*.cpp.o
+*.ino.bin
+*.ino.elf
+spiffs.img
+.*.swp
