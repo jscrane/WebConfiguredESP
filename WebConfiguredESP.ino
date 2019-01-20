@@ -32,6 +32,7 @@ void config::configure(JsonObject &o) {
 }
 
 bool connected;
+const char *config_file = "/config.json";
 
 void setup() {
 	Serial.begin(115200);
@@ -44,7 +45,7 @@ void setup() {
 		return;
 	}
 
-	if (!cfg.read_file("/config.json")) {
+	if (!cfg.read_file(config_file)) {
 		Serial.print(F("config!"));
 		return;
 	}
@@ -64,15 +65,16 @@ void setup() {
 	server.on("/config", HTTP_POST, []() {
 		if (server.hasArg("plain")) {
 			String body = server.arg("plain");
-			File f = SPIFFS.open("/config.json", "w");
+			File f = SPIFFS.open(config_file, "w");
 			f.print(body);
 			f.close();
+			server.send(200);
 			ESP.restart();
 		} else
 			server.send(400, "text/plain", "No body!");
 	});
 	server.serveStatic("/", SPIFFS, "/index.html");
-	server.serveStatic("/config", SPIFFS, "/config.json");
+	server.serveStatic("/config", SPIFFS, config_file);
 	server.serveStatic("/js/transparency.min.js", SPIFFS, "/transparency.min.js");
 
 	httpUpdater.setup(&server);
