@@ -20,13 +20,13 @@ public:
 	char password[33];
 	char hostname[17];
 
-	void configure(JsonObject &o);
+	void configure(JsonDocument &doc);
 } cfg;
 
-void config::configure(JsonObject &o) {
-	strlcpy(ssid, o[F("ssid")] | "", sizeof(ssid));
-	strlcpy(password, o[F("password")] | "", sizeof(password));
-	strlcpy(hostname, o[F("hostname")] | "", sizeof(hostname));
+void config::configure(JsonDocument &doc) {
+	strlcpy(ssid, doc[F("ssid")] | "", sizeof(ssid));
+	strlcpy(password, doc[F("password")] | "", sizeof(password));
+	strlcpy(hostname, doc[F("hostname")] | "", sizeof(hostname));
 
 	// FIXME: read your configuration parameters here
 }

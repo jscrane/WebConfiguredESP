@@ -6,7 +6,7 @@ public:
   bool read_file(const char *filename);
 
 protected:
-  virtual void configure(class JsonObject &root) = 0;
+  virtual void configure(class JsonDocument &doc) = 0;
 };
 
 #endif
