@@ -42,24 +42,27 @@ void setup() {
 	if (!result) {
 		Serial.print(F("SPIFFS: "));
 		Serial.println(result);
-		return;
+		for(;;);
 	}
 
 	if (!cfg.read_file(config_file)) {
 		Serial.print(F("config!"));
-		return;
+		for(;;);
 	}
 
 	WiFi.mode(WIFI_STA);
 	WiFi.hostname(cfg.hostname);
 	if (*cfg.ssid) {
+		const char s[] = "|/-\\";
 		WiFi.setAutoReconnect(true);
 		WiFi.begin(cfg.ssid, cfg.password);
 		for (int i = 0; i < 60 && WiFi.status() != WL_CONNECTED; i++) {
 			delay(500);
-			Serial.print('.');
+			Serial.print(s[i % 4]);
+			Serial.print('\r');
 		}
 		connected = WiFi.status() == WL_CONNECTED;
+		Serial.println();
 	}
 
 	server.on("/config", HTTP_POST, []() {
@@ -87,17 +90,17 @@ void setup() {
 	} else
 		Serial.println(F("Error starting MDNS"));
 
-	if (!connected) {
+	if (connected) {
+		Serial.println();
+		Serial.print(F("Connected to "));
+		Serial.println(cfg.ssid);
+		Serial.println(WiFi.localIP());
+	} else {
 		WiFi.softAP(cfg.hostname);
 		Serial.print(F("Connect to SSID: "));
 		Serial.print(cfg.hostname);
 		Serial.println(F(" to configure WIFI"));
 		dnsServer.start(53, "*", WiFi.softAPIP());
-	} else {
-		Serial.println();
-		Serial.print(F("Connected to "));
-		Serial.println(cfg.ssid);
-		Serial.println(WiFi.localIP());
 	}
 
 	// FIXME: startup
